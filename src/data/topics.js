@@ -1,0 +1,342 @@
+export const topics = [
+  {
+    id: 'http',
+    name: 'Hypertext Transfer Protocol',
+    abbreviation: 'HTTP',
+    layers: [7],
+    layerId: 'application',
+    summary: 'Defines how web clients and servers exchange requests and responses.',
+    sections: [
+      { type: 'paragraphs', title: 'What HTTP does', content: [
+        'HTTP is the application-layer protocol used by browsers, web servers, APIs, and many other internet services. It defines how a client asks for a resource and how a server answers.',
+        'HTTP itself does not provide encryption. HTTPS is HTTP carried through TLS so the request and response are protected while they travel across the network.',
+      ]},
+      { type: 'list', title: 'Important parts of an HTTP exchange', items: [
+        'A method such as GET, POST, PUT, PATCH, or DELETE describes the requested action.',
+        'A path identifies the requested resource, such as /products or /images/logo.png.',
+        'Headers carry metadata such as the host, accepted content types, cookies, and caching instructions.',
+        'A message body may carry submitted form data, JSON, files, or returned page content.',
+        'A status code tells the client what happened, such as 200, 301, 404, or 500.',
+      ]},
+      { type: 'steps', title: 'How a basic web request works', items: [
+        'The browser resolves the server name and establishes a transport connection.',
+        'For HTTPS, the client and server establish a protected TLS session.',
+        'The browser sends an HTTP request containing a method, path, headers, and sometimes a body.',
+        'The web server or application processes the request.',
+        'The server returns an HTTP response with a status code, headers, and content.',
+        'The browser interprets the response and may request additional files such as CSS, JavaScript, and images.',
+      ]},
+      { type: 'commands', title: 'Useful commands', items: [
+        { command: 'curl -I https://example.com', description: 'Requests only the response headers so you can inspect the status code and server metadata.' },
+        { command: 'curl -v https://example.com', description: 'Shows detailed connection and HTTP request information.' },
+      ]},
+      { type: 'cards', title: 'How HTTP connects to other concepts', items: [
+        { title: 'DNS', text: 'DNS normally supplies the server IP address before the browser can send an HTTP request.' },
+        { title: 'TCP', text: 'Traditional HTTP and HTTP/2 use TCP for reliable delivery. HTTP/3 uses QUIC over UDP.' },
+        { title: 'Ports', text: 'HTTP commonly uses TCP port 80, while HTTPS commonly uses TCP port 443.' },
+        { title: 'TLS', text: 'TLS adds encryption, server authentication, and integrity protection to create HTTPS.' },
+      ]},
+      { type: 'list', title: 'Common troubleshooting examples', items: [
+        'A 404 response means the server was reached, but the requested resource was not found.',
+        'A 500-series response points to a server-side or application problem.',
+        'A timeout may indicate DNS, routing, firewall, transport, or server availability problems before HTTP completes.',
+        'A certificate warning occurs in the TLS portion of HTTPS, not in plain HTTP itself.',
+      ]},
+    ],
+    connections: ['dns', 'tcp', 'ports', 'ipv4'],
+  },
+  {
+    id: 'dns',
+    name: 'Domain Name System',
+    abbreviation: 'DNS',
+    layers: [7],
+    layerId: 'application',
+    summary: 'Translates human-readable hostnames into IP addresses and other records.',
+    sections: [
+      { type: 'paragraphs', title: 'What DNS does', content: [
+        'DNS is a distributed naming system. It lets people use names such as example.com instead of memorizing IP addresses.',
+        'DNS can also publish mail server information, aliases, verification records, service locations, and other data. It is more than a simple hostname-to-address list.',
+      ]},
+      { type: 'list', title: 'Common DNS record types', items: [
+        'A record: maps a hostname to an IPv4 address.',
+        'AAAA record: maps a hostname to an IPv6 address.',
+        'CNAME record: makes one hostname an alias of another hostname.',
+        'MX record: identifies mail servers for a domain.',
+        'NS record: identifies the authoritative name servers for a zone.',
+        'TXT record: stores text used for verification, email policy, and other purposes.',
+      ]},
+      { type: 'steps', title: 'How a DNS lookup works', items: [
+        'The application asks the operating system to resolve a hostname.',
+        'The computer checks local sources such as its DNS cache and hosts file.',
+        'If needed, the computer sends a query to its configured recursive DNS resolver.',
+        'The resolver checks its own cache or follows the DNS hierarchy toward an authoritative server.',
+        'The resolver returns the requested record and usually caches it for its time-to-live period.',
+        'The client uses the returned address to begin communicating with the destination server.',
+      ]},
+      { type: 'commands', title: 'Useful commands', items: [
+        { command: 'nslookup example.com', description: 'Queries DNS and displays the returned address records.' },
+        { command: 'ipconfig /displaydns', description: 'Displays the Windows DNS resolver cache.' },
+        { command: 'ipconfig /flushdns', description: 'Clears the Windows DNS resolver cache when stale results are suspected.' },
+      ]},
+      { type: 'cards', title: 'How DNS connects to other concepts', items: [
+        { title: 'HTTP', text: 'A browser usually resolves the website hostname before sending HTTP traffic.' },
+        { title: 'UDP and TCP', text: 'Most traditional DNS queries use UDP port 53. TCP is used when needed, including some large responses and zone transfers.' },
+        { title: 'IPv4 and IPv6', text: 'A and AAAA records provide the logical addresses used to reach a host.' },
+        { title: 'Caching', text: 'Caching improves speed and reduces repeated queries, but stale entries can temporarily return outdated information.' },
+      ]},
+      { type: 'list', title: 'Common troubleshooting examples', items: [
+        'A website works by IP address but not by name: investigate DNS configuration and resolution.',
+        'One hostname resolves incorrectly while others work: inspect cached records and the authoritative record.',
+        'The configured DNS server cannot be reached: verify the client IP settings, gateway, routing, and firewall rules.',
+        'Different DNS servers return different answers: caching, propagation, split DNS, or configuration differences may be involved.',
+      ]},
+    ],
+    connections: ['http', 'udp', 'tcp', 'ipv4'],
+  },
+  {
+    id: 'tcp',
+    name: 'Transmission Control Protocol',
+    abbreviation: 'TCP',
+    layers: [4],
+    layerId: 'transport',
+    summary: 'Provides connection-oriented, reliable, ordered delivery between applications.',
+    sections: [
+      { type: 'paragraphs', title: 'What TCP does', content: [
+        'TCP creates a logical connection between two application endpoints. It numbers data, acknowledges received information, retransmits missing data, and delivers the byte stream in order.',
+        'TCP reliability adds overhead and delay compared with UDP, but it is valuable when an application needs complete and ordered delivery.',
+      ]},
+      { type: 'steps', title: 'The three-way handshake', items: [
+        'The client sends a SYN segment to request a connection and advertise an initial sequence number.',
+        'The server replies with SYN-ACK to acknowledge the client and provide its own initial sequence number.',
+        'The client sends an ACK. The connection is established and application data can flow.',
+      ]},
+      { type: 'list', title: 'Core TCP features', items: [
+        'Sequence numbers keep data in the correct order.',
+        'Acknowledgments confirm received data.',
+        'Retransmission replaces data that appears to be lost.',
+        'Flow control helps prevent a fast sender from overwhelming a receiver.',
+        'Congestion control adjusts transmission behavior when the network is overloaded.',
+        'Source and destination ports identify the communicating applications.',
+      ]},
+      { type: 'commands', title: 'Useful commands', items: [
+        { command: 'netstat -ano', description: 'Displays active TCP connections, listening ports, and process identifiers on Windows.' },
+        { command: 'Test-NetConnection example.com -Port 443', description: 'Tests whether a TCP connection can be made to a specified host and port.' },
+      ]},
+      { type: 'cards', title: 'How TCP connects to other concepts', items: [
+        { title: 'Ports', text: 'TCP uses source and destination port numbers to deliver data to the correct applications.' },
+        { title: 'IP', text: 'TCP segments are carried inside IP packets between hosts.' },
+        { title: 'HTTP', text: 'HTTP/1.1 and HTTP/2 normally use TCP. HTTPS adds TLS above the TCP connection.' },
+        { title: 'Firewalls', text: 'Stateful firewalls track TCP connection state and can permit or block traffic based on ports and session status.' },
+      ]},
+      { type: 'list', title: 'Common troubleshooting examples', items: [
+        'Connection refused usually means the destination host responded but no service is accepting that port, or a firewall rejected it.',
+        'A connection timeout can indicate packet loss, routing failure, filtering, or an unavailable host.',
+        'Repeated retransmissions suggest loss, congestion, poor wireless conditions, or another path problem.',
+        'A successful ping does not prove that a particular TCP service or port is reachable.',
+      ]},
+    ],
+    connections: ['ports', 'ipv4', 'http', 'udp'],
+  },
+  {
+    id: 'udp', name: 'User Datagram Protocol', abbreviation: 'UDP', layers: [4], layerId: 'transport',
+    summary: 'Provides lightweight, connectionless transport without guaranteed delivery.',
+    connections: ['ports', 'dns', 'ipv4', 'tcp'],
+  },
+  {
+    id: 'ports', name: 'Port Numbers', abbreviation: 'Ports', layers: [4], layerId: 'transport',
+    summary: 'Identify the source and destination application or service on a host.',
+    connections: ['tcp', 'udp', 'http', 'dns'],
+  },
+  {
+    id: 'ipv4',
+    name: 'Internet Protocol version 4',
+    abbreviation: 'IPv4',
+    layers: [3],
+    layerId: 'network',
+    summary: 'Provides 32-bit logical addressing and packet delivery across networks.',
+    sections: [
+      { type: 'paragraphs', title: 'What IPv4 does', content: [
+        'IPv4 gives network interfaces logical addresses and allows routers to move packets between different networks. An IPv4 address identifies a host interface and the network to which it belongs.',
+        'IPv4 provides best-effort delivery. It does not guarantee that a packet arrives, arrives once, or arrives in order. Transport protocols such as TCP can add those features when required.',
+      ]},
+      { type: 'list', title: 'Important parts of IPv4', items: [
+        'A 32-bit address is written as four decimal octets, such as 192.168.1.25.',
+        'The subnet mask or prefix length separates the network portion from the host portion.',
+        'The source address identifies the sender and the destination address identifies the final IP endpoint.',
+        'The Time to Live value is reduced by each router to prevent packets from circulating forever.',
+        'The protocol field identifies the carried payload, such as TCP, UDP, or ICMP.',
+      ]},
+      { type: 'steps', title: 'How a host makes a delivery decision', items: [
+        'The host compares its own address and the destination address using the subnet mask.',
+        'If the destination is local, the host sends the frame directly to the destination interface.',
+        'If the destination is remote, the host selects a route, commonly the default route.',
+        'The host keeps the final destination IP address in the packet but sends the local frame to the next-hop router.',
+        'Each router repeats the routing decision until the packet reaches the destination network.',
+      ]},
+      { type: 'commands', title: 'Useful commands', items: [
+        { command: 'ipconfig', description: 'Displays Windows IPv4 addresses, subnet masks, and default gateways.' },
+        { command: 'ping 8.8.8.8', description: 'Tests basic IP reachability using ICMP echo messages.' },
+        { command: 'tracert example.com', description: 'Shows the Layer 3 path toward a destination as far as devices respond.' },
+        { command: 'route print', description: 'Displays the Windows routing table.' },
+      ]},
+      { type: 'cards', title: 'How IPv4 connects to other concepts', items: [
+        { title: 'Routing tables', text: 'Hosts and routers consult routing tables to decide where an IPv4 packet should go next.' },
+        { title: 'Default gateway', text: 'The default gateway is the next hop used when no more specific route matches a remote destination.' },
+        { title: 'ARP', text: 'On an Ethernet-style local network, ARP maps the local next-hop IPv4 address to a MAC address.' },
+        { title: 'TCP and UDP', text: 'IPv4 packets commonly carry TCP segments or UDP datagrams.' },
+      ]},
+      { type: 'list', title: 'Common troubleshooting examples', items: [
+        'An address or subnet mask is incorrect: the host may treat local devices as remote or remote devices as local.',
+        'The default gateway is missing or incorrect: local communication may work while remote networks fail.',
+        'A duplicate IPv4 address can cause unstable connectivity and conflicting ARP entries.',
+        'An APIPA address in 169.254.0.0/16 often indicates that a Windows host could not obtain a DHCP lease.',
+      ]},
+    ],
+    connections: ['routing-tables', 'default-gateway', 'arp', 'icmp', 'tcp'],
+  },
+  { id: 'icmp', name: 'Internet Control Message Protocol', abbreviation: 'ICMP', layers: [3], layerId: 'network', summary: 'Carries network status, error, and diagnostic messages used by tools such as ping.', connections: ['ipv4', 'routing-tables'] },
+  { id: 'routing-tables', name: 'Routing Tables', abbreviation: 'Routes', layers: [3], layerId: 'network', summary: 'Store destination networks and the next hops or interfaces used to reach them.', connections: ['ipv4', 'default-gateway'] },
+  { id: 'default-gateway', name: 'Default Gateway', abbreviation: 'Gateway', layers: [3], layerId: 'network', summary: 'Provides the next-hop router used when a destination is outside the local network.', connections: ['ipv4', 'arp', 'routing-tables', 'mac-addresses'] },
+  {
+    id: 'ethernet',
+    name: 'Ethernet',
+    abbreviation: 'Ethernet',
+    layers: [1, 2],
+    layerId: 'data-link',
+    summary: 'Defines common wired LAN framing, signaling, media, and access standards.',
+    sections: [
+      { type: 'paragraphs', title: 'What Ethernet does', content: [
+        'Ethernet is a family of standards used by wired local networks. At Layer 2 it defines the frame format and MAC addressing. At Layer 1, related standards define signaling, speeds, connectors, and media.',
+        'Ethernet delivers frames across one local link or broadcast domain. Routers remove the incoming frame and create a new frame when forwarding an IP packet onto another link.',
+      ]},
+      { type: 'list', title: 'Main Ethernet frame fields', items: [
+        'Destination MAC address identifies the local receiving interface or a group such as broadcast.',
+        'Source MAC address identifies the sending interface on the current link.',
+        'EtherType identifies the carried protocol, such as IPv4 or ARP.',
+        'Payload carries the upper-layer data, commonly an IP packet.',
+        'Frame Check Sequence helps detect corruption during transmission.',
+      ]},
+      { type: 'steps', title: 'How an Ethernet frame moves', items: [
+        'The sender determines the next-hop MAC address, often using ARP for IPv4.',
+        'The network interface builds a frame around the Layer 3 packet.',
+        'A switch learns source MAC addresses and forwards the frame based on its MAC address table.',
+        'The receiving interface checks the destination MAC and frame integrity.',
+        'The receiver removes the Ethernet information and passes the payload upward.',
+      ]},
+      { type: 'commands', title: 'Useful commands and tools', items: [
+        { command: 'getmac /v', description: 'Displays MAC addresses and adapter information on Windows.' },
+        { command: 'arp -a', description: 'Shows IPv4-to-MAC mappings that may be used to build local Ethernet frames.' },
+        { command: 'Wireshark', description: 'Captures and displays Ethernet frame fields and encapsulated protocols.' },
+      ]},
+      { type: 'cards', title: 'How Ethernet connects to other concepts', items: [
+        { title: 'MAC addresses', text: 'Ethernet uses source and destination MAC addresses for local delivery.' },
+        { title: 'ARP', text: 'ARP requests and replies are carried inside Ethernet frames.' },
+        { title: 'VLANs', text: '802.1Q tags can identify a VLAN and keep Layer 2 broadcast domains logically separate.' },
+        { title: 'Copper and fiber', text: 'Ethernet standards can transmit frames over several physical media types.' },
+      ]},
+      { type: 'list', title: 'Common troubleshooting examples', items: [
+        'A link light is off: check the cable, port, adapter state, transceiver, and negotiated link.',
+        'Frames reach the wrong or no switch port: inspect VLAN membership and switching configuration.',
+        'CRC or frame errors may point to damaged cabling, interference, failing hardware, or duplex problems.',
+        'A host has an IP address but cannot reach local peers: investigate ARP, MAC learning, VLANs, and physical connectivity.',
+      ]},
+    ],
+    connections: ['mac-addresses', 'arp', 'vlans', 'copper', 'fiber'],
+  },
+  {
+    id: 'mac-addresses',
+    name: 'Media Access Control Addresses',
+    abbreviation: 'MAC',
+    layers: [2],
+    layerId: 'data-link',
+    summary: 'Identify network interfaces for frame delivery on a local network segment.',
+    sections: [
+      { type: 'paragraphs', title: 'What MAC addresses do', content: [
+        'A MAC address is a Layer 2 identifier used to deliver frames across a local network link. Ethernet and Wi-Fi interfaces use MAC addresses while communicating within their local broadcast domain.',
+        'A MAC address is not normally used as the end-to-end address across the internet. Routers replace Layer 2 frame addresses at each routed hop while the destination IP address continues toward the final host.',
+      ]},
+      { type: 'list', title: 'Important MAC address types', items: [
+        'Unicast identifies one network interface.',
+        'Broadcast FF:FF:FF:FF:FF:FF targets every interface in the local broadcast domain.',
+        'Multicast identifies a group of interested interfaces.',
+        'Locally administered addresses may be assigned or randomized by software rather than permanently burned into hardware.',
+      ]},
+      { type: 'steps', title: 'How switches use MAC addresses', items: [
+        'A switch receives a frame on one port.',
+        'It learns the source MAC address and records which port it came from.',
+        'It looks up the destination MAC address in its MAC address table.',
+        'If the destination is known, it forwards the frame through the matching port.',
+        'If the destination is unknown, broadcast, or certain multicast traffic, it may flood the frame through multiple ports in the VLAN.',
+      ]},
+      { type: 'commands', title: 'Useful commands', items: [
+        { command: 'getmac /v', description: 'Shows Windows adapter names and MAC addresses.' },
+        { command: 'ipconfig /all', description: 'Displays detailed adapter configuration, including the physical address.' },
+        { command: 'arp -a', description: 'Shows which local IPv4 addresses are currently associated with which MAC addresses.' },
+      ]},
+      { type: 'cards', title: 'How MAC addresses connect to other concepts', items: [
+        { title: 'Ethernet', text: 'Ethernet frames contain source and destination MAC address fields.' },
+        { title: 'ARP', text: 'ARP discovers the MAC address associated with a local IPv4 next hop.' },
+        { title: 'Switches', text: 'Switches learn source MAC addresses and use a MAC address table to forward frames.' },
+        { title: 'Default gateways', text: 'When sending to a remote IP destination, the local frame normally uses the default gateway’s MAC address.' },
+      ]},
+      { type: 'list', title: 'Common troubleshooting examples', items: [
+        'A stale or incorrect ARP entry maps an IP address to the wrong MAC address.',
+        'A switch MAC table shows an address moving repeatedly between ports, which can indicate a loop or unusual topology.',
+        'MAC randomization may make a wireless device appear under different addresses over time.',
+        'A duplicated or spoofed MAC address can cause unstable local delivery.',
+      ]},
+    ],
+    connections: ['ethernet', 'arp', 'default-gateway', 'vlans'],
+  },
+  {
+    id: 'arp',
+    name: 'Address Resolution Protocol', abbreviation: 'ARP', layers: [2, 3], layerId: 'network',
+    summary: 'Discovers the MAC address associated with a local IPv4 address.',
+    sections: [
+      { type: 'paragraphs', title: 'What ARP does', content: [
+        'IPv4 identifies where a device is logically, while Ethernet delivers a frame to an interface on the local link. ARP connects those systems by finding the MAC address associated with a local IPv4 address.',
+        'ARP is used only on the local network segment. Routers do not forward normal ARP broadcasts between networks.',
+      ]},
+      { type: 'paragraphs', title: 'Why ARP is needed', content: ['A computer may know the destination IPv4 address, but an Ethernet frame still needs a destination MAC address. Without that local address, the interface cannot deliver the frame.'] },
+      { type: 'steps', title: 'How ARP works', items: [
+        'The computer decides whether the IP destination is local or remote.',
+        'For a local destination it needs the destination host’s MAC address. For a remote destination it needs the default gateway’s MAC address.',
+        'The computer checks its ARP cache for a usable mapping.',
+        'If no entry exists, it broadcasts an ARP request.',
+        'The device that owns the requested IP address sends an ARP reply containing its MAC address.',
+        'The computer caches the mapping and uses it to build the Ethernet frame.',
+      ]},
+      { type: 'cards', title: 'ARP request, reply, and cache', items: [
+        { title: 'ARP request', text: 'The sender asks who owns an IPv4 address. The request is normally sent to Ethernet broadcast FF:FF:FF:FF:FF:FF.' },
+        { title: 'ARP reply', text: 'The owner returns its MAC address, normally in a unicast reply to the requester.' },
+        { title: 'ARP cache', text: 'The operating system temporarily stores learned IPv4-to-MAC mappings to reduce repeated broadcasts.' },
+      ]},
+      { type: 'commands', title: 'Useful command', items: [{ command: 'arp -a', description: 'Displays the current ARP cache on Windows.' }] },
+      { type: 'cards', title: 'How ARP connects to other concepts', items: [
+        { title: 'Default gateway', text: 'For remote destinations, ARP usually finds the local default gateway’s MAC address.' },
+        { title: 'IPv4', text: 'ARP maps local IPv4 next-hop addresses to Layer 2 addresses.' },
+        { title: 'MAC addresses', text: 'The result of ARP is the destination MAC address needed for the local frame.' },
+        { title: 'Ethernet', text: 'ARP messages are carried inside Ethernet frames.' },
+      ]},
+      { type: 'list', title: 'Common troubleshooting examples', items: [
+        'No ARP entry appears after traffic is attempted: check local connectivity, VLANs, address settings, and whether the target is online.',
+        'An IP address maps to the wrong MAC address: investigate stale cache data or a duplicate IP address.',
+        'Local ping fails before ICMP can be delivered: check whether ARP resolves successfully.',
+      ]},
+    ],
+    connections: ['ipv4', 'mac-addresses', 'ethernet', 'default-gateway', 'arp-cache'],
+  },
+  { id: 'arp-cache', name: 'ARP Cache', abbreviation: 'ARP Cache', layers: [2, 3], layerId: 'data-link', summary: 'Temporarily stores IPv4-to-MAC address mappings learned through ARP.', connections: ['arp', 'ipv4', 'mac-addresses'] },
+  { id: 'vlans', name: 'Virtual Local Area Networks', abbreviation: 'VLANs', layers: [2], layerId: 'data-link', summary: 'Logically separate Layer 2 broadcast domains on shared switching equipment.', connections: ['ethernet', 'mac-addresses'] },
+  { id: 'wi-fi', name: 'Wireless LAN', abbreviation: 'Wi-Fi', layers: [1, 2], layerId: 'data-link', summary: 'Uses radio signaling and 802.11 framing to provide wireless local networking.', connections: ['mac-addresses'] },
+  { id: 'copper', name: 'Copper Cabling', abbreviation: 'Copper', layers: [1], layerId: 'physical', summary: 'Carries network signals as electrical changes through twisted-pair or coaxial cable.', connections: ['ethernet', 'fiber'] },
+  { id: 'fiber', name: 'Fiber-Optic Cabling', abbreviation: 'Fiber', layers: [1], layerId: 'physical', summary: 'Carries network signals as pulses of light through glass or plastic strands.', connections: ['ethernet', 'copper'] },
+]
+
+export function getTopicById(topicId) {
+  return topics.find((topic) => topic.id === topicId)
+}
+
+export function getTopicsByIds(topicIds = []) {
+  return topicIds.map((topicId) => getTopicById(topicId)).filter(Boolean)
+}
