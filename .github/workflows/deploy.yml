@@ -28,11 +28,14 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install --include=dev
+      - name: Install application dependencies
+        run: npm install
 
-      - name: verify vite installation
-        run: npm exec vite -- --version
+      - name: Install Vite build tools
+        run: npm install --no-save vite@8.1.5 @vitejs/plugin-react@6.0.3
+      
+      - name: verify local vite installation
+        run: ./mode-modules/.bin/vite --version
 
       - name: Build website
         run: npm run build
