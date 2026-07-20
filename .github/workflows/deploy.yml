@@ -35,7 +35,7 @@ jobs:
         run: npm install --no-save vite@8.1.5 @vitejs/plugin-react@6.0.3
       
       - name: verify local vite installation
-        run: ./mode-modules/.bin/vite --version
+        run: ./node-modules/.bin/vite --version
 
       - name: Build website
         run: npm run build
