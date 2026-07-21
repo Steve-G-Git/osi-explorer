@@ -1,25 +1,33 @@
 # OSI Explorer
 
-OSI Explorer is an interactive learning website that presents the OSI model as a connected network of layers, protocols, devices, addresses, commands, and troubleshooting concepts.
+OSI Explorer is an interactive networking education site that presents the OSI model as a connected system of layers, protocols, devices, addressing methods, commands, and troubleshooting concepts.
 
-**Live site:** `https://Steve-G-Git.github.io/osi-explorer/`
-
-> The live link will begin working after the repository is pushed to GitHub and GitHub Pages is enabled.
+**Live site:** https://steve-g-git.github.io/osi-explorer/
 
 ## Project highlights
 
-- Interactive connected knowledge map with filtering and concept inspection
-
-- Seven-layer OSI overview
-- Detailed layer pages
+- Interactive knowledge map with connected topic nodes, search, and OSI layer filtering
+- Seven-layer OSI overview with detailed layer pages
 - Searchable topic encyclopedia
 - Complete lessons for ARP, DNS, TCP, HTTP, IPv4, Ethernet, and MAC addresses
-- Connected-topic navigation using stable topic IDs
 - Guided 12-step packet journey showing what happens when a user visits a website
+- Connected-topic navigation using stable topic IDs
 - Responsive desktop and mobile layouts
 - Keyboard-accessible navigation and visible focus states
 - Reduced-motion support
-- Automatic GitHub Pages deployment through GitHub Actions
+- Automated deployment to GitHub Pages through GitHub Actions
+
+## Why I built it
+
+The OSI model is often taught as seven separate boxes. I wanted to build a tool that shows how the pieces actually connect.
+
+For example:
+
+```text
+HTTP → TCP → Ports → IPv4 → Ethernet → MAC addresses
+```
+
+The goal is to help learners move from memorizing definitions to understanding how protocols, addressing, hardware, and troubleshooting tools work together.
 
 ## Technology
 
@@ -28,12 +36,31 @@ OSI Explorer is an interactive learning website that presents the OSI model as a
 - JavaScript
 - CSS
 - React Router
+- Git
 - GitHub Actions
 - GitHub Pages
 
+## What I learned
+
+- How to structure a React application with reusable components and routed pages
+- How to separate learning content from interface code using JavaScript data files
+- How stable topic IDs can connect related concepts throughout an application
+- How DNS, TCP, IP, ARP, Ethernet, and physical media work together during network communication
+- How to build responsive and keyboard-accessible interfaces
+- How to configure a Vite project for GitHub Pages
+- How to troubleshoot npm, package-lock, Vite, Git, and GitHub Actions deployment failures
+- How to use Git commits and automated deployment to maintain a live project
+
 ## Run locally
 
-Open PowerShell in the project directory and install the dependencies:
+Clone the repository:
+
+```powershell
+git clone https://github.com/Steve-G-Git/osi-explorer.git
+cd osi-explorer
+```
+
+Install dependencies:
 
 ```powershell
 npm.cmd install
@@ -45,7 +72,7 @@ Start the Vite development server:
 npm.cmd run dev
 ```
 
-Open the local address printed by Vite, normally:
+Open the address displayed by Vite, normally:
 
 ```text
 http://localhost:5173/osi-explorer/
@@ -64,7 +91,7 @@ npm.cmd run build
 npm.cmd run preview
 ```
 
-Vite creates the production website in the `dist` directory.
+Vite creates the production site in the `dist` directory.
 
 ## Project structure
 
@@ -81,6 +108,7 @@ osi-explorer/
 │   │   └── topics.js
 │   ├── pages/
 │   │   ├── HomePage.jsx
+│   │   ├── KnowledgeMapPage.jsx
 │   │   ├── LayerPage.jsx
 │   │   ├── NotFoundPage.jsx
 │   │   ├── PacketJourneyPage.jsx
@@ -100,59 +128,40 @@ osi-explorer/
 
 ## Content architecture
 
-Learning content is kept separate from the interface:
+Learning content is stored separately from the interface:
 
 - `src/data/layers.js` stores the seven OSI layers.
 - `src/data/topics.js` stores encyclopedia topics and their connections.
 - `src/data/packetJourney.js` stores the guided packet-journey steps.
 
-Reusable page components read these files and render the content. New topics can therefore be added without creating a new React component for every lesson.
+Reusable components read those files and render the pages. This allows new topics and connections to be added without creating a separate React component for every lesson.
 
-## Deploy to GitHub Pages
+## Deployment
 
-This project is configured for a repository named exactly:
+The site is automatically deployed through GitHub Actions whenever changes are pushed to the `main` branch.
 
-```text
-osi-explorer
-```
-
-The Vite base path in `vite.config.js` is:
+The Vite base path is configured for the repository name:
 
 ```js
 base: '/osi-explorer/'
 ```
 
-The workflow at `.github/workflows/deploy.yml` builds and publishes the site whenever changes are pushed to the `main` branch.
+The deployment workflow:
 
-### First deployment
+1. Checks out the repository
+2. Installs Node.js and project dependencies
+3. Builds the Vite application
+4. Uploads the `dist` directory
+5. Deploys the artifact to GitHub Pages
 
-1. Create a new empty GitHub repository named `osi-explorer`.
-2. Do not initialize it with a README, `.gitignore`, or license because those files already exist locally.
-3. Open PowerShell in this project folder.
-4. Initialize Git and push the project using the commands below.
-5. In the GitHub repository, open **Settings > Pages**.
-6. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-7. Open the **Actions** tab and wait for the deployment workflow to finish.
+## Planned improvements
 
-```powershell
-git init
-git add .
-git commit -m "Launch OSI Explorer"
-git branch -M main
-git remote add origin https://github.com/Steve-G-Git/osi-explorer.git
-git push -u origin main
-```
+- Complete lessons for UDP, ports, ICMP, routing tables, default gateways, VLANs, Wi-Fi, copper, and fiber
+- Add practical troubleshooting scenarios
+- Add automated checks for topic IDs, connections, layers, and packet-journey steps
+- Add project screenshots and additional diagrams
+- Continue accessibility and mobile testing
 
-After deployment, the site should be available at:
+## License
 
-```text
-https://Steve-G-Git.github.io/osi-explorer/
-```
-
-## Future roadmap
-
-- Interactive connected-topic map
-- Complete lessons for UDP, ICMP, routing tables, VLANs, Wi-Fi, copper, fiber, and ports
-- Quiz mode
-- Troubleshooting scenarios
-- Additional diagrams and accessibility testing
+This project is licensed under the MIT License.
