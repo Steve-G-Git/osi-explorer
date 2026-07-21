@@ -6,7 +6,7 @@ OSI Explorer is an interactive networking education site that presents the OSI m
 
 ## Project highlights
 
-- Interactive knowledge map with connected topic nodes, search, and OSI layer filtering
+- Responsive interactive knowledge map with connected topic nodes, persistent connection lines, search, and OSI layer filtering
 - Seven-layer OSI overview with detailed layer pages
 - Searchable topic encyclopedia
 - Complete lessons for ARP, DNS, TCP, UDP, Ports, HTTP, IPv4, ICMP, Routing Tables, Default Gateways, Ethernet, MAC Addresses, VLANs, Wi-Fi, Copper, and Fiber

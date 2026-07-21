@@ -96,8 +96,15 @@ export default function KnowledgeMapPage() {
 
       <div className="knowledge-layout">
         <section className="map-panel" aria-label="Interactive topic map">
-          <div className="map-scroll-region">
-            <div className="knowledge-canvas">
+          <div className="map-explanation" aria-label="How to use the knowledge map">
+            <p><strong>How it works:</strong> Select a concept to highlight its direct connections. All other connections remain visible for context.</p>
+            <div className="map-legend" aria-label="Connection legend">
+              <span><i className="legend-line" aria-hidden="true" /> Connection</span>
+              <span><i className="legend-line legend-line-active" aria-hidden="true" /> Selected topic connection</span>
+            </div>
+          </div>
+
+          <div className="knowledge-canvas">
               <svg
                 className="knowledge-edges"
                 viewBox="0 0 100 100"
@@ -148,9 +155,7 @@ export default function KnowledgeMapPage() {
                   </button>
                 )
               })}
-            </div>
           </div>
-          <p className="map-help">On smaller screens, scroll sideways to explore the complete map.</p>
         </section>
 
         <aside className="map-inspector" aria-live="polite">
