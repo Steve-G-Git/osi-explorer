@@ -9,7 +9,7 @@ OSI Explorer is an interactive networking education site that presents the OSI m
 - Interactive knowledge map with connected topic nodes, search, and OSI layer filtering
 - Seven-layer OSI overview with detailed layer pages
 - Searchable topic encyclopedia
-- Complete lessons for ARP, DNS, TCP, HTTP, IPv4, Ethernet, and MAC addresses
+- Complete lessons for ARP, DNS, TCP, UDP, Ports, HTTP, IPv4, ICMP, Routing Tables, Default Gateways, Ethernet, MAC Addresses, VLANs, Wi-Fi, Copper, and Fiber
 - Guided 12-step packet journey showing what happens when a user visits a website
 - Connected-topic navigation using stable topic IDs
 - Responsive desktop and mobile layouts
@@ -45,7 +45,7 @@ The goal is to help learners move from memorizing definitions to understanding h
 - How to structure a React application with reusable components and routed pages
 - How to separate learning content from interface code using JavaScript data files
 - How stable topic IDs can connect related concepts throughout an application
-- How DNS, TCP, IP, ARP, Ethernet, and physical media work together during network communication
+- How DNS, TCP, UDP, IP, ICMP, ARP, Ethernet, VLANs, Wi-Fi, and physical media work together
 - How to build responsive and keyboard-accessible interfaces
 - How to configure a Vite project for GitHub Pages
 - How to troubleshoot npm, package-lock, Vite, Git, and GitHub Actions deployment failures
@@ -103,6 +103,7 @@ osi-explorer/
 ├── src/
 │   ├── components/
 │   ├── data/
+│   │   ├── knowledgeMap.js
 │   │   ├── layers.js
 │   │   ├── packetJourney.js
 │   │   └── topics.js
@@ -133,6 +134,7 @@ Learning content is stored separately from the interface:
 - `src/data/layers.js` stores the seven OSI layers.
 - `src/data/topics.js` stores encyclopedia topics and their connections.
 - `src/data/packetJourney.js` stores the guided packet-journey steps.
+- `src/data/knowledgeMap.js` stores layout information for the interactive knowledge map.
 
 Reusable components read those files and render the pages. This allows new topics and connections to be added without creating a separate React component for every lesson.
 
@@ -156,7 +158,6 @@ The deployment workflow:
 
 ## Planned improvements
 
-- Complete lessons for UDP, ports, ICMP, routing tables, default gateways, VLANs, Wi-Fi, copper, and fiber
 - Add practical troubleshooting scenarios
 - Add automated checks for topic IDs, connections, layers, and packet-journey steps
 - Add project screenshots and additional diagrams
