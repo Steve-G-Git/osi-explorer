@@ -5,6 +5,7 @@ import LayerPage from './pages/LayerPage.jsx'
 import TopicPage from './pages/TopicPage.jsx'
 import PacketJourneyPage from './pages/PacketJourneyPage.jsx'
 import TopicsPage from './pages/TopicsPage.jsx'
+import KnowledgeMapPage from './pages/KnowledgeMapPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/topics" element={<TopicsPage />} />
           <Route path="/topics/:topicId" element={<TopicPage />} />
           <Route path="/packet-journey" element={<PacketJourneyPage />} />
+          <Route path="/knowledge-map" element={<KnowledgeMapPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

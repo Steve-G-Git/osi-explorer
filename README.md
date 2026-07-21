@@ -8,6 +8,8 @@ OSI Explorer is an interactive learning website that presents the OSI model as a
 
 ## Project highlights
 
+- Interactive connected knowledge map with filtering and concept inspection
+
 - Seven-layer OSI overview
 - Detailed layer pages
 - Searchable topic encyclopedia

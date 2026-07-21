@@ -25,6 +25,9 @@ export default function SiteHeader() {
           <NavLink to="/packet-journey">
             Packet Journey
           </NavLink>
+          <NavLink to="/knowledge-map">
+            Knowledge Map
+          </NavLink>
         </nav>
       </div>
     </header>

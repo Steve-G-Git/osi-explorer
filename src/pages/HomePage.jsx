@@ -33,6 +33,18 @@ export default function HomePage() {
         <Link className="button-link" to="/topics">Browse topics</Link>
       </section>
 
+      <section className="home-topics-callout" aria-labelledby="knowledge-map-heading">
+        <div>
+          <p className="eyebrow">Explore connections</p>
+          <h2 id="knowledge-map-heading">See the network behind the layers.</h2>
+          <p>
+            Follow visible links between HTTP, TCP, IP, Ethernet, ARP, MAC
+            addresses, physical media, and other related concepts.
+          </p>
+        </div>
+        <Link className="button-link" to="/knowledge-map">Open knowledge map</Link>
+      </section>
+
       <section className="network-map-section" aria-labelledby="map-title">
         <div className="section-heading">
           <div>
